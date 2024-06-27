@@ -169,10 +169,8 @@ public class BoardService {
     // 조회 : 부분 게시글
     public BoardResponseDto getOneBoard(Long boardId) {
 
-        Board board = boardRepository.findById(boardId).orElseThrow(()
+        return boardRepository.findWithLikeCountById(boardId).orElseThrow(()
                 -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
-
-        return new BoardResponseDto(board);
 
     }
 

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sparta.code3line.common.Timestamp;
+import sparta.code3line.domain.like.entity.LikeBoard;
 import sparta.code3line.domain.user.entity.User;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class Board extends Timestamp {
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BoardFiles> boardFiles = new ArrayList<>();
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeBoard> likeBoards = new ArrayList<>();
 
     @Builder
     public Board(User user, String title, String contents, BoardType type) {

@@ -6,7 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sparta.code3line.common.Timestamp;
 import sparta.code3line.domain.board.entity.Board;
+import sparta.code3line.domain.like.entity.LikeComment;
 import sparta.code3line.domain.user.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -28,6 +32,9 @@ public class Comment extends Timestamp {
     @ManyToOne
     @JoinColumn(name = "board_id", nullable = false)
     private Board board;
+
+    @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<LikeComment> likeComments = new ArrayList<>();
 
     @Builder
     public Comment(String contents, User user, Board board) {

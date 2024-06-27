@@ -41,6 +41,14 @@ public class CommentService {
 
     }
 
+    public CommentResponseDto getComment(Long commentId) {
+
+        return commentRepository.findWithLikeCountById(commentId).orElseThrow(
+                () -> new CustomException(ErrorCode.COMMENT_NOT_FOUND)
+        );
+
+    }
+
     public List<CommentResponseDto> readComments(Long boardId) {
 
         List<Comment> comments = commentRepository.findAllByBoardId(boardId).orElse(null);

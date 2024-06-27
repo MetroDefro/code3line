@@ -35,6 +35,20 @@ public class CommentController {
 
     }
 
+    @GetMapping("/comments/{commentId}")
+    public ResponseEntity<CommonResponse<CommentResponseDto>> getComment(@PathVariable Long boardId,
+                                                                         @PathVariable Long commentId) {
+
+        CommonResponse<CommentResponseDto> response = new CommonResponse<>(
+                "댓글 조회 완료 🎉",
+                HttpStatus.OK.value(),
+                commentService.getComment(commentId)
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+
+    }
+
     @GetMapping("/comments")
     public ResponseEntity<CommonResponse<List<CommentResponseDto>>> readComments(@PathVariable Long boardId) {
 

@@ -48,3 +48,8 @@ Authorization: Bearer {{access_token}}
 DELETE http://localhost:8080/2/comment/1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
+
+### 4-5. 댓글 단건 조회
+GET http://localhost:8080/2/comments/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
