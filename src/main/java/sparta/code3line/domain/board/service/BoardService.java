@@ -171,7 +171,6 @@ public class BoardService {
 
         return boardRepository.findWithLikeCountById(boardId).orElseThrow(()
                 -> new CustomException(ErrorCode.BOARD_NOT_FOUND));
-
     }
 
     // 게시글 수정

@@ -1,11 +1,16 @@
 package sparta.code3line.domain.like.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import sparta.code3line.common.exception.CustomException;
 import sparta.code3line.common.exception.ErrorCode;
 import sparta.code3line.domain.board.entity.Board;
 import sparta.code3line.domain.board.repository.BoardRepository;
+import sparta.code3line.domain.comment.dto.CommentResponseDto;
 import sparta.code3line.domain.comment.entity.Comment;
 import sparta.code3line.domain.comment.repository.CommentRepository;
 import sparta.code3line.domain.like.dto.LikeResponseDto;
@@ -102,5 +107,12 @@ public class LikeService {
         likeCommentRepository.delete(likeComment);
         return new LikeResponseDto(likeComment);
 
+    }
+
+    public Page<CommentResponseDto> getComments(int page, User user) {
+
+        Pageable pageable = PageRequest.of(page - 1, 5);
+
+        return commentRepository.findWithLikeCountByUserId(user.getId(), pageable, "createdAt");
     }
 }

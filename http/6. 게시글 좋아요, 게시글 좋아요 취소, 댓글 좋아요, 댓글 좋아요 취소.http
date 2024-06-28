@@ -23,11 +23,16 @@ Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ### 댓글 좋아요
-POST http://localhost:8080/comments/1/likes
+POST http://localhost:8080/comments/2/likes
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
 
 ### 댓글 좋아요 취소
-DELETE http://localhost:8080/comments/2/likes
+DELETE http://localhost:8080/comments/1/likes
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+### 좋아요 한 댓글 조회
+GET http://localhost:8080/likes/comments?page=1
 Content-Type: application/json
 Authorization: Bearer {{access_token}}
