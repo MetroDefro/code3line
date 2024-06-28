@@ -131,7 +131,9 @@ public class UserService {
         } else if(currentUser.getRole() == User.Role.NORMAL){
             User user = userRepository.findById(currentUser.getId())
                     .orElseThrow(() -> new CustomException(ErrorCode.USERNAME_NOT_FOUND));
-            userResponseDto.add(new UserResponseDto(user));
+            userResponseDto.add(new UserResponseDto(user,
+                    userRepository.getLikeBoardCountById(user.getId()),
+                    userRepository.getLikeCommentCountById(user.getId())));
         }
 
         return userResponseDto;
