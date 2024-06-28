@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import sparta.code3line.common.exception.CustomException;
 import sparta.code3line.common.exception.ErrorCode;
+import sparta.code3line.domain.board.dto.BoardResponseDto;
 import sparta.code3line.domain.board.entity.Board;
 import sparta.code3line.domain.board.repository.BoardRepository;
 import sparta.code3line.domain.comment.dto.CommentResponseDto;
@@ -109,10 +110,17 @@ public class LikeService {
 
     }
 
+    public Page<BoardResponseDto> getBoards(int page, User user) {
+        Pageable pageable = PageRequest.of(page - 1, 5);
+
+        return boardRepository.findWithLikeCountByUserId(user.getId(), pageable, "createdAt");
+    }
+
     public Page<CommentResponseDto> getComments(int page, User user) {
 
         Pageable pageable = PageRequest.of(page - 1, 5);
 
         return commentRepository.findWithLikeCountByUserId(user.getId(), pageable, "createdAt");
     }
+
 }

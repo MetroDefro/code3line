@@ -8,6 +8,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.function.EntityResponse;
 import sparta.code3line.common.CommonResponse;
+import sparta.code3line.domain.board.dto.BoardResponseDto;
 import sparta.code3line.domain.comment.dto.CommentResponseDto;
 import sparta.code3line.domain.like.dto.LikeResponseDto;
 import sparta.code3line.domain.like.service.LikeService;
@@ -72,6 +73,21 @@ public class LikeController {
                 "댓글 좋아요 취소 성공 🎉",
                 HttpStatus.OK.value(),
                 responseDto));
+
+    }
+
+    @GetMapping("/likes/boards")
+    public ResponseEntity<CommonResponse<Page<BoardResponseDto>>> getLikeBoards(
+            @RequestParam(defaultValue = "1") int page,
+            @AuthenticationPrincipal UserPrincipal principal) {
+
+        CommonResponse<Page<BoardResponseDto>> response = new CommonResponse<>(
+                "좋아요 한 게시글 전체 조회 완료 🎉",
+                HttpStatus.OK.value(),
+                likeService.getBoards(page, principal.getUser())
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(response);
 
     }
 
