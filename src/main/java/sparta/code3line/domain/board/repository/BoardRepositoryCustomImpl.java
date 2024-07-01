@@ -129,6 +129,7 @@ public class BoardRepositoryCustomImpl implements BoardRepositoryCustom {
 
         return switch (sortType) {
             case "createdAt" -> new OrderSpecifier<>(Order.DESC, board.createdAt);
+            case "nickname" -> new OrderSpecifier<>(Order.ASC, board.user.nickname);
             default -> new OrderSpecifier<>(Order.DESC, board.createdAt);
         };
     }
