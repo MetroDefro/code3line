@@ -6,7 +6,7 @@ import sparta.code3line.domain.follow.entity.Follow;
 import java.util.List;
 import java.util.Optional;
 
-public interface FollowRepository extends JpaRepository<Follow, Long> {
+public interface FollowRepository extends JpaRepository<Follow, Long>, FollowRepositoryCustom {
 
     Optional<Follow> findByFollowingIdAndFollowerId(Long followingId, Long id);
 

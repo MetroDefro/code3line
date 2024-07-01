@@ -3,10 +3,13 @@ package sparta.code3line.domain.follow.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import sparta.code3line.common.exception.CustomException;
+import sparta.code3line.domain.follow.dto.TopFollowerResponseDto;
 import sparta.code3line.domain.follow.entity.Follow;
 import sparta.code3line.domain.follow.repository.FollowRepository;
 import sparta.code3line.domain.user.entity.User;
 import sparta.code3line.domain.user.repository.UserRepository;
+
+import java.util.List;
 
 import static sparta.code3line.common.exception.ErrorCode.*;
 
@@ -65,6 +68,12 @@ public class FollowService {
     private boolean isAlreadyFollowing(Long followingUserId, Long followerId) {
 
         return followRepository.findByFollowingIdAndFollowerId(followingUserId, followerId).isPresent();
+
+    }
+
+    public List<TopFollowerResponseDto> getTopFollowers() {
+
+        return followRepository.findTop10Followers();
 
     }
 }
