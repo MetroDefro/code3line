@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import sparta.code3line.common.CommonResponse;
 import sparta.code3line.domain.board.dto.BoardRequestDto;
 import sparta.code3line.domain.board.dto.BoardResponseDto;
+import sparta.code3line.domain.board.dto.BoardSearchCond;
 import sparta.code3line.domain.board.dto.BoardUpdateRequestDto;
 import sparta.code3line.domain.board.service.BoardService;
 import sparta.code3line.security.UserPrincipal;
@@ -95,6 +96,23 @@ public class BoardController {
 
     }
 
+    // 조회 : 팔로우 게시글
+    @GetMapping("/boards/follows")
+    public ResponseEntity<CommonResponse<Page<BoardResponseDto>>> getAllFollowBoards(
+            BoardSearchCond searchCond,
+            @AuthenticationPrincipal UserPrincipal userPrincipal) {
+
+        Page<BoardResponseDto> responseDto = boardService.getAllFollowBoards(searchCond, userPrincipal.getUser());
+        CommonResponse<Page<BoardResponseDto>> commonResponse = new CommonResponse<>(
+                "팔로우 게시글 " + searchCond.getPage() + "번 페이지 조회 완료",
+                HttpStatus.OK.value(),
+                responseDto
+        );
+
+        return ResponseEntity.status(HttpStatus.OK).body(commonResponse);
+
+    }
+
     // 조회 : 부분 게시글
     @GetMapping("/boards/{boardId}")
     public ResponseEntity<CommonResponse<BoardResponseDto>> getOneBoard(
@@ -151,25 +169,25 @@ public class BoardController {
     }
 
     // 조회 : 팔로우하는 사용자의 게시글
-    @GetMapping("/boards/follows")
-    public ResponseEntity<CommonResponse<List<BoardResponseDto>>> getFollowBoard(
-            @AuthenticationPrincipal UserPrincipal userPrincipal
-    ) {
-
-        if (userPrincipal == null || userPrincipal.getUser() == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        List<BoardResponseDto> followBoardList = boardService.getFollowBoard(userPrincipal.getUser());
-        CommonResponse<List<BoardResponseDto>> response = new CommonResponse<>(
-                "게시글 조회 성공 🎉",
-                HttpStatus.OK.value(),
-                followBoardList
-        );
-
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-
-    }
+//    @GetMapping("/boards/follows")
+//    public ResponseEntity<CommonResponse<List<BoardResponseDto>>> getFollowBoard(
+//            @AuthenticationPrincipal UserPrincipal userPrincipal
+//    ) {
+//
+//        if (userPrincipal == null || userPrincipal.getUser() == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+//        }
+//
+//        List<BoardResponseDto> followBoardList = boardService.getFollowBoard(userPrincipal.getUser());
+//        CommonResponse<List<BoardResponseDto>> response = new CommonResponse<>(
+//                "게시글 조회 성공 🎉",
+//                HttpStatus.OK.value(),
+//                followBoardList
+//        );
+//
+//        return ResponseEntity.status(HttpStatus.OK).body(response);
+//
+//    }
 
 }
 

@@ -10,6 +10,7 @@ import sparta.code3line.common.exception.CustomException;
 import sparta.code3line.common.exception.ErrorCode;
 import sparta.code3line.domain.board.dto.BoardRequestDto;
 import sparta.code3line.domain.board.dto.BoardResponseDto;
+import sparta.code3line.domain.board.dto.BoardSearchCond;
 import sparta.code3line.domain.board.dto.BoardUpdateRequestDto;
 import sparta.code3line.domain.board.entity.Board;
 import sparta.code3line.domain.board.entity.BoardFiles;
@@ -19,6 +20,7 @@ import sparta.code3line.domain.file.FileService;
 import sparta.code3line.domain.follow.entity.Follow;
 import sparta.code3line.domain.follow.repository.FollowRepository;
 import sparta.code3line.domain.user.entity.User;
+import sparta.code3line.security.UserPrincipal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -163,6 +165,14 @@ public class BoardService {
         Page<Board> boardPage = boardRepository.findAllByType(Board.BoardType.NORMAL, pageable);
 
         return boardPage.map(BoardResponseDto::new);
+
+    }
+
+    public Page<BoardResponseDto> getAllFollowBoards(BoardSearchCond searchCond, User user) {
+
+        Pageable pageable = PageRequest.of(searchCond.getPage() - 1, 5);
+
+        return boardRepository.findByFollowing(user.getId(), searchCond, pageable);
 
     }
 
